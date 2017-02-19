@@ -1,0 +1,4 @@
+MONGODB_SETTINGS={'DB': 'Questions'}
+SECRET_KEY = 'qadoor'
+WTF_CSRF_ENABLED = False
+PER_PAGE = 20
