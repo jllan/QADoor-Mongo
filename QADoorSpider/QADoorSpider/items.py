@@ -13,9 +13,3 @@ class QuestionItem(Item):
     answers = Field()
     tags = Field()
     source = Field()
-
-
-class AnswerItem(Item):
-    _id = Field()
-    content = Field()
-    votes = Field()

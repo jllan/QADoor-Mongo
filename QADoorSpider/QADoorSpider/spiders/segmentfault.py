@@ -1,10 +1,8 @@
-import json
-import time
 import re
 import scrapy
 from scrapy.http import Request
 from scrapy.selector import Selector
-from QADoorSpider.items import QuestionItem, AnswerItem
+from QADoorSpider.items import QuestionItem
 
 class SegmentfaultSpider(scrapy.Spider):
     name = "segmentfault"
@@ -67,5 +65,4 @@ class SegmentfaultSpider(scrapy.Spider):
             answers.append(answer)
         q_item['content'] = question_text
         q_item['answers'] = answers
-
         yield q_item

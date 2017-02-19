@@ -3,7 +3,7 @@ import time
 import scrapy
 from scrapy.http import Request
 from scrapy.selector import Selector
-from QADoorSpider.items import QuestionItem, AnswerItem
+from QADoorSpider.items import QuestionItem
 
 class StackoverflowSpider(scrapy.Spider):
     name = "stackoverflow"
@@ -19,7 +19,6 @@ class StackoverflowSpider(scrapy.Spider):
 
     """解析api返回的数据"""
     def parse_api(self, response):
-        # print(response.text)
         result = json.loads(response.text)
         questions = result['items']
         for q in questions:
@@ -38,16 +37,12 @@ class StackoverflowSpider(scrapy.Spider):
             q_item['source'] = 'so'
             if q_item['answer_count'] >= 1:
                 yield Request(url=q_item['url'], meta={'item': q_item}, callback=self.parse_answer)
-            # yield Request(url=q_item['reprint_link'], meta={'question_id': q['question_id']}, callback=self.parse_answer)
 
 
     """解析每个问题的详细内容及答案"""
     def parse_answer(self, response):
         q_item = response.meta['item']
         selector = Selector(response)
-        # question_text = selector.xpath('//div[@class="question"]//div[@class="post-text"]').extract_first()
-        # a_item = AnswerItem()
-        # a_item['question_id'] = q_item['question_id']
         question_text = selector.xpath('//div[@class="post-text"]').extract()[0]
         answers_text = selector.xpath('//div[@class="post-text"]').extract()[1:]
         answers_votes = selector.xpath('//span[@itemprop="upvoteCount"]/text()').extract()[1:]
@@ -62,8 +57,6 @@ class StackoverflowSpider(scrapy.Spider):
             answer['answer_votes'] = vote
             answer['answer_id'] = int(str(q_item['_id']) + str(index+1))
             answers.append(answer)
-        # answer_text = selector.xpath('//div[@itemprop="acceptedAnswer"]//div[@class="post-text"]').extract_first()
-        # answer_votes = selector.xpath('//div[@itemprop="acceptedAnswer"]//span[@itemprop="upvoteCount"]/text()').extract_first()
         q_item['content'] = question_text
         q_item['answers'] = answers
         yield q_item
