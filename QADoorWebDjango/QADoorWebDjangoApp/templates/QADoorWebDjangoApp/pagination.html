@@ -1,0 +1,45 @@
+<ul class="pagination">
+    {# 上一页 #}
+    {% if questions.has_previous %}
+        <li class="waves-effect"><a href="?page={{ questions.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+    {% else %}
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    {% endif %}
+
+    {% if first_page == current_page %}
+        <li class="active"><a>1</a></li>
+    {% else %}
+        <li class="waves-effect"><a href="?page=1">1</a></li>
+    {% endif %}
+
+    {% if pages_first > 2 %}
+        <li class="waves-effect"><a href="#">...</a></li>
+    {% endif %}
+
+    {% for page in pages %}
+        {% if page == current_page %}
+            <li class="active"><a>{{ page }}</a></li>
+        {% else %}
+            <li class="waves-effect"><a href="?page={{ page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+
+    {% if pages_last < last_page %}
+        <li class="waves-effect"><a href="#">...</a></li>
+    {% endif %}
+
+    {% if last_page != 1 %}
+        {% if last_page == current_page %}
+            <li class="active"><a>{{ last_page }}</a></li>
+        {% else %}
+            <li class="waves-effect"><a href="?page={{ last_page }}">{{ last_page }}</a></li>
+        {% endif %}
+    {% endif %}
+
+    {# 下一页 #}
+    {% if questions.has_next %}
+        <li class="waves-effect"><a href="?page={{ questions.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+    {% else %}
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    {% endif %}
+</ul>

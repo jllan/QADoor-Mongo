@@ -1,6 +1,7 @@
 QADoor的爬虫和WEB端
 
 ## 项目地址
+Flask实现 
 [http://192.157.231.97:8080/](http://192.157.231.97:8080/)
 
 ---
@@ -12,9 +13,18 @@ QADoor的爬虫和WEB端
 
 
 ### WEB端
+#### 用Flask实现
 - 后端
 后端使用Flask+Mongodb
 
 - 前端
 前端使用material design风格的[materialcss](http://materializecss.com/)框架
+
+#### 用Django实现
+- 后端
+后端使用Django+Mongodb
+
+- 前端
+前端使用material design风格的[materialcss](http://materializecss.com/)框架
+
 

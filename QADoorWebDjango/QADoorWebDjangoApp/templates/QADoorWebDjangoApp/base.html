@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{% static 'css/materialize.min.css' %}" rel="stylesheet">
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <title>问答门</title>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li>
+                <form id="search_form" class="col s12" action="" method="post">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                      <input id="search" type="text" name="key" value="">
+                    </div>
+                  </div>
+                </form>
+              </li>
+              <li><a href="/">问答</a></li>
+              <li><a href="/">专栏</a></li>
+              <li><a href="/">求职</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+         <div>
+            {% block content %}
+            {% endblock %}
+         </div>
+
+    </div>
+
+    <footer class="page-footer">
+      <div class="footer-copyright">
+        <div class="container">
+        © 2017 Copyright Jlan
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      $(document).ready(function() {
+        $(".button-collapse").sideNav();
+      });
+
+      $(function() {
+          $('#search').bind('input propertychange', function () {
+              var $key = $("#search").val();
+              $("#search_form").attr("action",'/search/'+$key+'/');
+          })
+      });
+    </script>
+
+</body>
+</html>

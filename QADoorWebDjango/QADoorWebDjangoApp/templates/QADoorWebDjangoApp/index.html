@@ -1,4 +1,7 @@
-{% extends "layout.html" %}
+{% extends "QADoorWebDjangoApp/base.html" %}
+{% load staticfiles %}
+{% load paginate_tags %}
+{% load mongoid_tags %}
 
 {% block content %}
 <div>
@@ -12,39 +15,20 @@
         </thead>
         <tbody>
             {% if questions %}
+
+            {% paginate questions 20 %}
             {% for q in questions %}
             <tr>
-              <!--<td>
-                  <ul class="collapsible" data-collapsible="accordion">
-                    <li>
-                      <div class="collapsible-header"><a href="{{ url_for('question.question_detail', question_id=q._id) }}">{{q.title|safe}}</a></div>
-                      <div class="collapsible-body">
-                          <div class="col s12 m6">
-                              <div class="card blue-grey darken-1">
-                                <div class="card-content white-text">
-                                  <span class="card-title">问题详情</span>
-                                  <p>{{ q.content|safe }}</p>
-                                </div>
-                                <div class="card-action">
-                                  <a href="{{ url_for('question.question_detail', question_id=q._id) }}">查看答案</a>
-                                </div>
-                              </div>
-                            </div>
-                      </div>
-                    </li>
-
-                  </ul>
-              </td>-->
               <td>
-                  <a href="{{ url_for('question.question_detail', question_id=q._id) }}">{{q.title|safe}}</a>
-                  <a id="q_detail" class="right hide-on-med-and-down" href="#{{ q._id }}"><i class="material-icons left">info_outline</i></a>
-                  <div id="{{ q._id }}" class="modal">
+                  <a href="{% url 'QADoorWebDjangoApp:detail' q|private:'_id' %}">{{q.title|safe}}</a>
+                  <a id="q_detail" class="right hide-on-med-and-down" href="#{{ q|private:'_id' }}"><i class="material-icons left">info_outline</i></a>
+                  <div id="{{ q|private:'_id' }}" class="modal">
                     <div class="modal-content">
                       <h4>问题详情</h4>
                       <p>{{ q.content|safe }}</p>
                     </div>
                     <div class="modal-footer">
-                      <a href="{{ url_for('question.question_detail', question_id=q._id) }}">查看答案</a>
+                      <a href="{% url 'QADoorWebDjangoApp:detail' q|private:'_id' %}">查看答案</a>
                       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">关闭</a>
                     </div>
                   </div>
@@ -52,7 +36,7 @@
               <td>
               {% for tag in q.tags %}
                   <div class="chip">
-                    <a href="{{ url_for('question.question_tag', tag=tag) }}">{{tag}}</a>
+                    <a href="{% url 'QADoorWebDjangoApp:tag' tag %}">{{tag}}</a>
                   </div>
               {% endfor %}
               </td>
@@ -73,18 +57,7 @@
         </tbody>
     </table>
 
-
-   <div class=pagination>
-        {% if pagination.has_prev %}
-            <li class="waves-effect"><a href="./{{ pagination.prev_num }}" >上一页</a></li>
-        {% endif %}
-
-        <li class="active"><strong><a href="">当前页 {{ pagination.page }} of {{ pagination.pages }}.</a></strong></li>
-
-        {% if pagination.has_next %}
-            <li class="waves-effect"><a href="./{{ pagination.next_num }}">下一页</a></li>
-        {% endif %}
-   </div>
+    {% include 'QADoorWebDjangoApp/pagination.html' %}
 
 </div>
     <script>
