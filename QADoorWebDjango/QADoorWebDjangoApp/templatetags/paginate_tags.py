@@ -13,7 +13,6 @@ def paginate(context, object_list, page_count):
     paginator = Paginator(object_list, page_count)
     # 从请求中获取页码号
     page = context['request'].GET.get('page')
-    print('hhhhhhhhhpage', page)
     try:
         object_list = paginator.page(page) # 根据页码号获取数据页码对象
         context['current_page'] = int(page) # 将当前页码号封装进context中

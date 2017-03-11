@@ -4,7 +4,6 @@ from .models import Questions
 
 def question_index(request):
     questions = Questions.objects
-    print(dir(questions))
     context = {
         'questions': questions,
     }

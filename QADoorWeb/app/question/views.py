@@ -25,9 +25,6 @@ def question_search(keyword='', page=1):
     pagination = Pagination(questions, page=page, per_page=PER_PAGE)
     return render_template('index.html', questions=pagination.items, pagination=pagination)
 
-    # paginate = Questions.query.filter(Questions.title.like('%' + keyword + '%')).paginate(page, PER_PAGE)
-    # return render_template('index.html', questions=paginate.items, pagination=paginate)
-
 @question.route('/tag/<string:tag>/', methods=['GET'])
 @question.route('/tag/<string:tag>/<int:page>', methods=['GET'])
 def question_tag(tag, page=1):
@@ -38,9 +35,7 @@ def question_tag(tag, page=1):
 
 @question.route('/detail/<question_id>', methods=['GET'])
 def question_detail(question_id):
-    # question = Questions.query.filter(Questions.question_id==question_id).one()
     question = Questions.objects.get_or_404(_id=question_id)
-    print(question.content)
     return render_template('question_detail.html', question=question)
 
 @question.errorhandler(404)
