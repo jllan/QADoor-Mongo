@@ -14,14 +14,17 @@
 <body>
 
     <nav>
-        <div class="nav-wrapper">
+        <div class="nav-wrapper container col s8 m8 l8">
+          <ul class="hide-on-med-and-down">
+            <li><a href="{% url 'QADoorWebDjangoApp:index' %}">问答门</a></li>
+          </ul>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li>
-                <form id="search_form" class="col s12" action="" method="post">
+                <form id="search_form" class="col s12" action="/search/" method="get">
                   <div class="row">
                     <div class="input-field col s6">
                       <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                      <input id="search" type="text" name="key" value="">
+                      <input id="search" type="text" value="" name="search_for">
                     </div>
                   </div>
                 </form>
@@ -54,12 +57,12 @@
         $(".button-collapse").sideNav();
       });
 
-      $(function() {
+      <!--$(function() {
           $('#search').bind('input propertychange', function () {
               var $key = $("#search").val();
               $("#search_form").attr("action",'/search/'+$key+'/');
           })
-      });
+      });-->
     </script>
 
 </body>
