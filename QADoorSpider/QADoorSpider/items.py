@@ -13,3 +13,12 @@ class QuestionItem(Item):
     answers = Field()
     tags = Field()
     source = Field()
+
+class ArticleItem(Item):
+    _id = Field()
+    url = Field()
+    title = Field()
+    content = Field()
+    tags = Field()
+    source = Field()
+    pub_date = Field()

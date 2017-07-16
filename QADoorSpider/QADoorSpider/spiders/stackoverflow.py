@@ -13,7 +13,7 @@ class StackoverflowSpider(scrapy.Spider):
     ]
 
     def start_requests(self):
-        for page in range(100, 200):
+        for page in range(1, 20):
             yield Request('https://api.stackexchange.com/2.2/questions?key=U4DMV*8nvpm3EOpvf69Rxw((&page={}&pagesize=100&order=desc&sort=votes&site=stackoverflow'.format(page), callback=self.parse_api)
 
 
@@ -23,7 +23,7 @@ class StackoverflowSpider(scrapy.Spider):
         questions = result['items']
         for q in questions:
             q_item = QuestionItem()
-            q_item['_id'] = q['question_id']
+            # q_item['_id'] = q['question_id']
             q_item['title'] = q['title']
             q_item['url'] = q['link']
             q_item['tags'] = q['tags']
@@ -55,7 +55,7 @@ class StackoverflowSpider(scrapy.Spider):
                 answer['is_accepted'] = 0
             answer['answer_text'] = ans
             answer['answer_votes'] = vote
-            answer['answer_id'] = int(str(q_item['_id']) + str(index+1))
+            answer['answer_id'] = index+1
             answers.append(answer)
         q_item['content'] = question_text
         q_item['answers'] = answers

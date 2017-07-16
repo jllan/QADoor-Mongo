@@ -24,7 +24,7 @@ class SegmentfaultSpider(scrapy.Spider):
             summary = q.xpath('div[@class="summary"]')
             q_item['title'] = summary.xpath('h2/a/text()').extract()[0].strip()
             q_item['url'] = 'https://segmentfault.com' + summary.xpath('h2/a/@href').extract()[0].strip()
-            q_item['_id'] = int(q_item['url'].split('/')[-1])
+            # q_item['_id'] = int(q_item['url'].split('/')[-1])
             q_item['tags'] = summary.xpath('ul[contains(@class, "taglist")]/li/a/@data-original-title').extract()
             qa_rank = q.xpath('div[@class="qa-rank"]')
             q_item['vote_count'] = qa_rank.xpath('div[contains(@class, "votes")]/text()').extract()[0].strip()
@@ -53,7 +53,7 @@ class SegmentfaultSpider(scrapy.Spider):
         answers = []
         for i, ans in enumerate(answers_result):
             answer = {}
-            answer['answer_id'] = int(str(q_item['_id']) + str(i+1))        # question_id=100, answer1_id=1001, answer2_id=1002
+            answer['answer_id'] = i+1       # question_id=100, answer1_id=1001, answer2_id=1002
             answer['answer_votes'] = ans.xpath('div[@class="post-col"]/div/span/text()')[0].extract()
             answer_text = ans.xpath('div[@class="post-offset"]/div[@class="answer fmt"]')[0].extract()
             answer_text = re.sub('data-src="/', 'src="https://segmentfault.com/', answer_text)
